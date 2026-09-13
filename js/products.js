@@ -78,11 +78,19 @@ document.addEventListener("DOMContentLoaded", () => {
             <p class="product-card-desc">${p.shortDescription}</p>
             <div class="product-card-actions">
               <a href="product.html?product=${encodeURIComponent(p.slug)}" class="btn btn-secondary btn--sm">View Details</a>
-              <a href="https://www.facebook.com/profile.php?id=61573737929854" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn--sm">Inquire</a>
+              <button type="button" class="btn btn-primary btn--sm quick-inquire-btn" data-name="${p.name}" data-price="${p.priceDisplay || "₱350"}">Inquire</button>
             </div>
           </div>
         </article>
       `).join("");
+
+      productGrid.querySelectorAll(".quick-inquire-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const itemName = btn.getAttribute("data-name");
+          const itemPrice = btn.getAttribute("data-price");
+          triggerOrderModal(itemName, itemPrice);
+        });
+      });
     };
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -121,6 +129,38 @@ document.addEventListener("DOMContentLoaded", () => {
         searchClear.style.display = "none";
         renderProducts();
         if (searchInput) searchInput.focus();
+      });
+    }
+
+    const matcherRecipient = document.getElementById("matcher-recipient");
+    const matcherOccasion = document.getElementById("matcher-occasion");
+    const matcherFilterBtn = document.getElementById("matcher-filter-btn");
+    const matcherResetBtn = document.getElementById("matcher-reset-btn");
+
+    if (matcherFilterBtn && matcherRecipient && matcherOccasion) {
+      matcherFilterBtn.addEventListener("click", () => {
+        const occ = matcherOccasion.value;
+        const rec = matcherRecipient.value;
+        let terms = [];
+        if (occ !== "any") terms.push(occ);
+        if (rec !== "any") terms.push(rec);
+        searchQuery = terms.join(" ");
+        if (searchInput) searchInput.value = searchQuery;
+        if (searchClear) searchClear.style.display = "inline-flex";
+        if (matcherResetBtn) matcherResetBtn.style.display = "inline-flex";
+        renderProducts();
+      });
+    }
+
+    if (matcherResetBtn) {
+      matcherResetBtn.addEventListener("click", () => {
+        if (matcherRecipient) matcherRecipient.value = "any";
+        if (matcherOccasion) matcherOccasion.value = "any";
+        searchQuery = "";
+        if (searchInput) searchInput.value = "";
+        if (searchClear) searchClear.style.display = "none";
+        matcherResetBtn.style.display = "none";
+        renderProducts();
       });
     }
 
@@ -179,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (catEl) catEl.textContent = product.category.replace("-", " ");
 
     const priceEl = document.getElementById("product-price");
-    if (priceEl) priceEl.textContent = product.priceDisplay || "Inquire for price";
+    if (priceEl) priceEl.textContent = product.priceDisplay || "₱350";
 
     const descEl = document.getElementById("product-description");
     if (descEl) descEl.textContent = product.description;
@@ -201,6 +241,51 @@ document.addEventListener("DOMContentLoaded", () => {
           <span class="spec-value">${s.val}</span>
         </div>
       `).join("");
+    }
+
+    const triggerBtn = document.getElementById("product-order-modal-trigger");
+    if (triggerBtn) {
+      triggerBtn.addEventListener("click", () => {
+        triggerOrderModal(product.name, product.priceDisplay || "₱350");
+      });
+    }
+
+    const deliveryDateInput = document.getElementById("delivery-date-input");
+    const checkDeliveryBtn = document.getElementById("check-delivery-btn");
+    const deliveryStatus = document.getElementById("delivery-checker-status");
+
+    if (deliveryDateInput && checkDeliveryBtn && deliveryStatus) {
+      const today = new Date();
+      const minDateStr = today.toISOString().split("T")[0];
+      deliveryDateInput.min = minDateStr;
+
+      checkDeliveryBtn.addEventListener("click", () => {
+        const val = deliveryDateInput.value;
+        if (!val) {
+          deliveryStatus.className = "delivery-checker-status rush";
+          deliveryStatus.style.display = "block";
+          deliveryStatus.textContent = "Please select a target delivery date.";
+          return;
+        }
+
+        const targetDate = new Date(val);
+        const diffTime = targetDate - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays < 0) {
+          deliveryStatus.className = "delivery-checker-status past";
+          deliveryStatus.style.display = "block";
+          deliveryStatus.textContent = "Please choose a future date.";
+        } else if (diffDays <= 2) {
+          deliveryStatus.className = "delivery-checker-status rush";
+          deliveryStatus.style.display = "block";
+          deliveryStatus.innerHTML = "⚡ <strong>Rush Order:</strong> Delivery is within 48 hours. Please message us immediately on Facebook to confirm workshop slot availability!";
+        } else {
+          deliveryStatus.className = "delivery-checker-status available";
+          deliveryStatus.style.display = "block";
+          deliveryStatus.innerHTML = "🌸 <strong>Available:</strong> Plenty of time for bespoke handcrafting, wrapping, and Sorsogon delivery on " + targetDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) + ".";
+        }
+      });
     }
 
     const fbBtn = document.getElementById("inquire-fb-btn");
@@ -236,4 +321,126 @@ document.addEventListener("DOMContentLoaded", () => {
       `).join("");
     }
   }
+
+  const customizerSection = document.getElementById("customizer-section");
+  if (customizerSection) {
+    let basePrice = 150;
+    let addPrice = 0;
+    let selectedStyleName = "Single Stem Keepsake";
+    let selectedMaterialName = "Chenille Fuzzy Wire";
+    let selectedPaletteName = "Blush & Pastel Pink";
+
+    const priceDisplay = document.getElementById("customizer-price-display");
+    const styleText = document.getElementById("spec-style-text");
+    const materialText = document.getElementById("spec-material-text");
+    const paletteText = document.getElementById("spec-palette-text");
+    const customizerOrderBtn = document.getElementById("customizer-order-btn");
+
+    const updateCustomizerTotal = () => {
+      const total = basePrice + addPrice;
+      if (priceDisplay) priceDisplay.textContent = "₱" + total;
+      if (styleText) styleText.textContent = selectedStyleName;
+      if (materialText) materialText.textContent = selectedMaterialName;
+      if (paletteText) paletteText.textContent = selectedPaletteName;
+    };
+
+    customizerSection.querySelectorAll(".customizer-opt").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const parent = btn.parentElement;
+        parent.querySelectorAll(".customizer-opt").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const group = parent.getAttribute("data-group");
+        if (group === "style") {
+          basePrice = parseInt(btn.getAttribute("data-base"), 10) || 150;
+          selectedStyleName = btn.getAttribute("data-name");
+        } else if (group === "material") {
+          addPrice = parseInt(btn.getAttribute("data-add"), 10) || 0;
+          selectedMaterialName = btn.getAttribute("data-name");
+        } else if (group === "palette") {
+          selectedPaletteName = btn.getAttribute("data-name");
+        }
+        updateCustomizerTotal();
+      });
+    });
+
+    if (customizerOrderBtn) {
+      customizerOrderBtn.addEventListener("click", () => {
+        const total = basePrice + addPrice;
+        const customItem = `${selectedStyleName} (${selectedMaterialName} - ${selectedPaletteName})`;
+        triggerOrderModal(customItem, "₱" + total);
+      });
+    }
+
+    updateCustomizerTotal();
+  }
+
+  const modalBackdrop = document.getElementById("order-modal-backdrop");
+  const modalClose = document.getElementById("order-modal-close");
+  const modalItem = document.getElementById("order-modal-item");
+  const modalPrice = document.getElementById("order-modal-price");
+  const modalText = document.getElementById("order-message-text");
+  const copyBtn = document.getElementById("copy-order-msg-btn");
+
+  function triggerOrderModal(itemName, itemPrice) {
+    if (!modalBackdrop) {
+      window.open("https://www.facebook.com/profile.php?id=61573737929854", "_blank");
+      return;
+    }
+
+    if (modalItem) modalItem.textContent = itemName;
+    if (modalPrice) modalPrice.textContent = itemPrice;
+
+    const draftMessage = `Hi Namomót-an! I would like to inquire/order: ${itemName} (${itemPrice}). Could you please share the lead time and delivery details for Sorsogon City? Thank you!`;
+    if (modalText) modalText.value = draftMessage;
+
+    modalBackdrop.classList.add("open");
+    modalBackdrop.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  if (modalClose && modalBackdrop) {
+    modalClose.addEventListener("click", () => {
+      modalBackdrop.classList.remove("open");
+      modalBackdrop.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    });
+
+    modalBackdrop.addEventListener("click", (e) => {
+      if (e.target === modalBackdrop) {
+        modalBackdrop.classList.remove("open");
+        modalBackdrop.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+      }
+    });
+  }
+
+  if (copyBtn && modalText) {
+    copyBtn.addEventListener("click", () => {
+      modalText.select();
+      navigator.clipboard.writeText(modalText.value).then(() => {
+        copyBtn.textContent = "COPIED TO CLIPBOARD!";
+        setTimeout(() => {
+          copyBtn.textContent = "COPY MESSAGE";
+        }, 2500);
+      }).catch(() => {
+        document.execCommand("copy");
+        copyBtn.textContent = "COPIED!";
+        setTimeout(() => {
+          copyBtn.textContent = "COPY MESSAGE";
+        }, 2500);
+      });
+    });
+  }
+
+  const indexInquireBtns = document.querySelectorAll(".favorites-section .product-card-actions .btn-primary");
+  indexInquireBtns.forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const card = btn.closest(".product-card");
+      const title = card ? card.querySelector(".product-card-title").textContent.trim() : "Handmade Bouquet";
+      const price = card ? card.querySelector(".product-card-price").textContent.trim() : "₱350";
+      triggerOrderModal(title, price);
+    });
+  });
 });

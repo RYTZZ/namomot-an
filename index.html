@@ -450,6 +450,74 @@
       </div>
     </section>
 
+    <section class="section customizer-section" id="customizer-section" aria-labelledby="customizer-heading">
+      <div class="container">
+        <div class="section-head text-center fade-in">
+          <span class="section-eyebrow">BESPOKE ATELIER</span>
+          <h2 class="section-title" id="customizer-heading">CUSTOMIZE YOUR BOUQUET</h2>
+          <div class="title-divider"></div>
+          <p class="section-desc">Design a one-of-a-kind handmade floral keepsake and get an instant price estimate for your gift.</p>
+        </div>
+        <div class="customizer-card fade-in">
+          <div class="customizer-steps">
+            <div class="customizer-step">
+              <span class="customizer-step-title">1. Bouquet Style</span>
+              <div class="customizer-options" data-group="style">
+                <button type="button" class="customizer-opt active" data-style="single" data-name="Single Stem Keepsake" data-base="150">Single Stem (₱150)</button>
+                <button type="button" class="customizer-opt" data-style="trio" data-name="Trio Petite Bouquet" data-base="250">Trio Bouquet (₱250)</button>
+                <button type="button" class="customizer-opt" data-style="signature" data-name="Signature Full Bouquet" data-base="450">Signature Bouquet (₱450)</button>
+                <button type="button" class="customizer-opt" data-style="grand" data-name="Grand Deluxe Keepsake" data-base="750">Grand Deluxe (₱750)</button>
+              </div>
+            </div>
+
+            <div class="customizer-step">
+              <span class="customizer-step-title">2. Floral Craft Material</span>
+              <div class="customizer-options" data-group="material">
+                <button type="button" class="customizer-opt active" data-material="fuzzy" data-name="Chenille Fuzzy Wire" data-add="0">Fuzzy Wire (Soft Chenille)</button>
+                <button type="button" class="customizer-opt" data-material="satin" data-name="Lustrous Ribbon Satin" data-add="50">Ribbon Satin (+₱50)</button>
+                <button type="button" class="customizer-opt" data-material="combo" data-name="Hybrid Satin & Fuzzy Wire" data-add="80">Artisan Mix (+₱80)</button>
+              </div>
+            </div>
+
+            <div class="customizer-step">
+              <span class="customizer-step-title">3. Color Palette</span>
+              <div class="customizer-options" data-group="palette">
+                <button type="button" class="customizer-opt active" data-palette="pastel-pink" data-name="Blush & Pastel Pink">Blush &amp; Pastel Pink</button>
+                <button type="button" class="customizer-opt" data-palette="sage-green" data-name="Earthy Sage & White">Earthy Sage &amp; White</button>
+                <button type="button" class="customizer-opt" data-palette="warm-sunflower" data-name="Warm Sunflower Yellow">Sunflower Yellow</button>
+                <button type="button" class="customizer-opt" data-palette="custom-palette" data-name="Custom Color Combination">Personalized Mix</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="customizer-summary-box">
+            <div class="customizer-summary-header">
+              <span class="customizer-summary-label">ESTIMATED PRICE</span>
+              <div class="customizer-total-price" id="customizer-price-display">₱150</div>
+            </div>
+            <div class="customizer-spec-list">
+              <div class="customizer-spec-item">
+                <span>Selected Style:</span>
+                <strong id="spec-style-text">Single Stem Keepsake</strong>
+              </div>
+              <div class="customizer-spec-item">
+                <span>Craft Material:</span>
+                <strong id="spec-material-text">Chenille Fuzzy Wire</strong>
+              </div>
+              <div class="customizer-spec-item">
+                <span>Palette:</span>
+                <strong id="spec-palette-text">Blush &amp; Pastel Pink</strong>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="customizer-order-btn" style="width:100%;justify-content:center;">
+              <svg width="18" height="18" aria-hidden="true"><use href="#icon-facebook"/></svg>
+              INQUIRE CUSTOM BOUQUET
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section why-section" aria-labelledby="why-heading">
       <div class="container">
         <div class="section-head text-center fade-in">
@@ -762,7 +830,42 @@
     <span class="fab-text">Chat with Us</span>
   </a>
 
+  <div class="order-modal-backdrop" id="order-modal-backdrop" aria-hidden="true">
+    <div class="order-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="order-modal-title">
+      <button type="button" class="order-modal-close" id="order-modal-close" aria-label="Close dialog">&times;</button>
+      <span class="section-eyebrow">DIRECT INQUIRY</span>
+      <h3 class="order-modal-title" id="order-modal-title">Inquire on Messenger</h3>
+      <p class="order-modal-desc">We have prepared your order message. Copy it or jump directly to chat with us on Facebook!</p>
+      
+      <div class="order-summary-card">
+        <div class="order-summary-row">
+          <span class="order-summary-label">Item:</span>
+          <strong id="order-modal-item">Fuzzy Wire Flowers</strong>
+        </div>
+        <div class="order-summary-row">
+          <span class="order-summary-label">Estimated Price:</span>
+          <strong id="order-modal-price" style="color:var(--color-primary-pink);">₱350</strong>
+        </div>
+        <div class="order-message-preview">
+          <textarea id="order-message-text" rows="3" readonly aria-label="Order message text"></textarea>
+        </div>
+      </div>
+
+      <div class="order-modal-actions">
+        <button type="button" class="btn btn-secondary" id="copy-order-msg-btn">
+          <span>COPY MESSAGE</span>
+        </button>
+        <a href="https://www.facebook.com/profile.php?id=61573737929854" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="open-messenger-btn">
+          <svg width="18" height="18" aria-hidden="true"><use href="#icon-facebook"/></svg>
+          OPEN MESSENGER
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="data/products.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/products.js"></script>
 </body>
 
 </html>

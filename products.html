@@ -74,6 +74,43 @@
 
   <section class="section" style="padding-top:2rem;">
     <div class="container">
+      <div class="flower-matcher-panel" id="flower-matcher-panel">
+        <div class="matcher-header">
+          <div class="matcher-badge">SMART FLOWER FINDER</div>
+          <h2 class="matcher-title">Find the Perfect Arrangement</h2>
+          <p class="matcher-desc">Select who you're gifting to and the occasion for personalized floral matches.</p>
+        </div>
+        <div class="matcher-controls">
+          <div class="matcher-select-wrap">
+            <label for="matcher-recipient" class="matcher-label">Gifting For:</label>
+            <select id="matcher-recipient" class="matcher-select">
+              <option value="any">Anyone / Any Recipient</option>
+              <option value="partner">Partner / Loved One</option>
+              <option value="mother">Mother / Parent</option>
+              <option value="friend">Friend / Colleague</option>
+              <option value="self">Self / Home Decor</option>
+            </select>
+          </div>
+          <div class="matcher-select-wrap">
+            <label for="matcher-occasion" class="matcher-label">Occasion:</label>
+            <select id="matcher-occasion" class="matcher-select">
+              <option value="any">Any Occasion</option>
+              <option value="birthday">Birthday Celebration</option>
+              <option value="anniversary">Romantic Anniversary</option>
+              <option value="graduation">Graduation &amp; Milestone</option>
+              <option value="wedding">Wedding / Entourage</option>
+              <option value="just-because">Just Because / Thinking of You</option>
+            </select>
+          </div>
+          <button type="button" class="btn btn-primary" id="matcher-filter-btn">
+            SHOW MATCHES
+          </button>
+          <button type="button" class="btn btn-secondary" id="matcher-reset-btn" style="display:none;">
+            RESET
+          </button>
+        </div>
+      </div>
+
       <div class="catalog-toolbar">
         <div class="catalog-search-wrap">
           <svg width="18" height="18" aria-hidden="true"><use href="#icon-search"/></svg>
@@ -160,6 +197,39 @@
   </span>
   <span class="fab-text">Chat with Us</span>
 </a>
+
+<div class="order-modal-backdrop" id="order-modal-backdrop" aria-hidden="true">
+  <div class="order-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="order-modal-title">
+    <button type="button" class="order-modal-close" id="order-modal-close" aria-label="Close dialog">&times;</button>
+    <span class="section-eyebrow">DIRECT INQUIRY</span>
+    <h3 class="order-modal-title" id="order-modal-title">Inquire on Messenger</h3>
+    <p class="order-modal-desc">We have prepared your order message. Copy it or jump directly to chat with us on Facebook!</p>
+    
+    <div class="order-summary-card">
+      <div class="order-summary-row">
+        <span class="order-summary-label">Item:</span>
+        <strong id="order-modal-item">Fuzzy Wire Flowers</strong>
+      </div>
+      <div class="order-summary-row">
+        <span class="order-summary-label">Estimated Price:</span>
+        <strong id="order-modal-price" style="color:var(--color-primary-pink);">₱350</strong>
+      </div>
+      <div class="order-message-preview">
+        <textarea id="order-message-text" rows="3" readonly aria-label="Order message text"></textarea>
+      </div>
+    </div>
+
+    <div class="order-modal-actions">
+      <button type="button" class="btn btn-secondary" id="copy-order-msg-btn">
+        <span>COPY MESSAGE</span>
+      </button>
+      <a href="https://www.facebook.com/profile.php?id=61573737929854" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="open-messenger-btn">
+        <svg width="18" height="18" aria-hidden="true"><use href="#icon-facebook"/></svg>
+        OPEN MESSENGER
+      </a>
+    </div>
+  </div>
+</div>
 
 <script src="data/products.js"></script>
 <script src="js/main.js"></script>
