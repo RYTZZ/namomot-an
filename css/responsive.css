@@ -66,17 +66,21 @@
     min-height: auto;
   }
   .hero-arch-frame {
-    max-width: 360px;
-    height: 420px;
+    max-width: 380px;
+    height: 440px;
   }
-  .hero-polaroid-frame {
-    width: 120px;
-    bottom: 1rem;
+  .hero-artisan-card {
+    bottom: 1.25rem;
     left: 1rem;
+    padding: 0.5rem 0.95rem 0.5rem 0.5rem;
   }
-  .hero-img-badge {
-    top: 1.5rem;
-    right: 1.5rem;
+  .hero-artisan-thumb {
+    width: 46px;
+    height: 46px;
+  }
+  .hero-atelier-glow {
+    width: 320px;
+    height: 320px;
   }
   .craft-steps-grid {
     grid-template-columns: 1fr;
@@ -250,24 +254,33 @@
     font-size: 0.75rem;
   }
   .hero-arch-frame {
-    max-width: 290px;
-    height: 350px;
+    max-width: 300px;
+    height: 380px;
     border-radius: 150px 150px var(--radius-lg) var(--radius-lg);
   }
-  .hero-polaroid-frame {
-    width: 100px;
-    padding: 0.4rem 0.4rem 0.8rem;
+  .hero-arch-tag {
+    top: 0.85rem;
+    font-size: 0.625rem;
+    padding: 0.35rem 0.85rem;
+  }
+  .hero-artisan-card {
     left: 0.5rem;
-    bottom: 0.5rem;
+    bottom: 1rem;
+    padding: 0.4rem 0.75rem 0.4rem 0.4rem;
+    gap: 0.5rem;
   }
-  .hero-polaroid-caption {
-    font-size: 0.6875rem;
+  .hero-artisan-thumb {
+    width: 42px;
+    height: 42px;
   }
-  .hero-img-badge {
-    font-size: 0.6875rem;
-    padding: 0.45rem 0.85rem;
-    top: 1rem;
-    right: 0.5rem;
+  .hero-artisan-title {
+    font-size: 0.875rem;
+  }
+  .hero-artisan-tag {
+    font-size: 0.5625rem;
+  }
+  .hero-artisan-price {
+    font-size: 0.75rem;
   }
   .floating-messenger-fab {
     bottom: 1.25rem;
