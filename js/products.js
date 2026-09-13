@@ -622,7 +622,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const sender = senderInput && senderInput.value.trim() ? senderInput.value.trim() : "";
 
     let draft = `Hi Namomót-an! I would like to place an order from your online catalog:\n\n`;
-    draft += `🌸 Item / Creation: ${activeItemLabel}\n`;
+    if (activeItemLabel.includes("\n")) {
+      draft += `🌸 Ordered Items:\n${activeItemLabel}\n\n`;
+    } else {
+      draft += `🌸 Item / Creation: ${activeItemLabel}\n`;
+    }
     draft += `💰 Total Estimate: ${activePriceLabel}\n`;
     draft += `👤 Recipient: ${recipient}\n`;
     draft += `📍 Delivery Location: ${barangay}\n`;
@@ -651,7 +655,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  function triggerOrderModal(itemName, itemPrice) {
+  function triggerOrderModal(itemName, itemPrice, customHtml) {
     if (!modalBackdrop) {
       window.open("https://www.facebook.com/profile.php?id=61573737929854", "_blank");
       return;
@@ -660,7 +664,13 @@ document.addEventListener("DOMContentLoaded", () => {
     activeItemLabel = itemName || "Handcrafted Bouquet";
     activePriceLabel = itemPrice || "₱350";
 
-    if (modalItem) modalItem.textContent = activeItemLabel;
+    if (modalItem) {
+      if (customHtml) {
+        modalItem.innerHTML = customHtml;
+      } else {
+        modalItem.textContent = activeItemLabel;
+      }
+    }
     if (modalPrice) modalPrice.textContent = activePriceLabel;
 
     if (dateInput && !dateInput.value) {
@@ -679,11 +689,15 @@ document.addEventListener("DOMContentLoaded", () => {
   window.triggerOrderModal = triggerOrderModal;
 
   window.triggerMultiOrderModal = function(items, totalAmount) {
-    const itemSummary = items.map(i => {
+    const listHtml = items.map(i => {
+      const addons = i.addons && i.addons.length ? `<span class="order-summary-item-addons">+ ${i.addons.join(", ")}</span>` : "";
+      return `<div class="order-summary-item-row"><span class="order-summary-item-title">${i.name}${addons}</span><span class="order-summary-item-qty">&times;${i.qty || 1}</span></div>`;
+    }).join("");
+    const plainSummary = items.map(i => {
       const addons = i.addons && i.addons.length ? ` (+ ${i.addons.join(", ")})` : "";
-      return `${i.name}${addons} x${i.qty || 1}`;
-    }).join("; ");
-    triggerOrderModal(itemSummary, `₱${totalAmount}`);
+      return `${i.name}${addons} (x${i.qty || 1})`;
+    }).join("\n   • ");
+    triggerOrderModal(`• ${plainSummary}`, `₱${totalAmount}`, listHtml);
   };
 
   if (modalClose && modalBackdrop) {
