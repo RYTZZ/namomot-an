@@ -27,18 +27,18 @@ document.addEventListener("DOMContentLoaded", () => {
               <img src="${p.image}" alt="${p.name} - Handmade Flower Arrangement by Namomót-an" loading="lazy">
             </a>
             ${p.signature ? '<span class="badge badge-signature">Signature</span>' : ''}
-            ${p.isSample ? '<span class="badge badge-sample" style="top:auto;bottom:0.75rem;">Sample</span>' : ''}
+            ${p.isSample ? '<span class="badge badge-sample" style="top:auto;bottom:0.75rem;right:0.75rem;left:auto;">Sample</span>' : ''}
+            <span class="product-card-price">${p.priceDisplay || "₱350"}</span>
           </div>
           <div class="product-card-body">
-            <span class="product-card-cat">${p.category.replace("-", " ")}</span>
+            <div class="product-card-meta-row">
+              <span class="product-card-cat">${p.category.replace("-", " ")}</span>
+              <span class="product-card-avail">${p.availability}</span>
+            </div>
             <h3 class="product-card-title">
               <a href="product.html?product=${encodeURIComponent(p.slug)}">${p.name}</a>
             </h3>
             <p class="product-card-desc">${p.shortDescription}</p>
-            <div class="product-card-price-row">
-              <span class="product-card-price">${p.priceDisplay || "Inquire for price"}</span>
-              <span class="product-card-avail">${p.availability}</span>
-            </div>
             <div class="product-card-actions">
               <a href="product.html?product=${encodeURIComponent(p.slug)}" class="btn btn-secondary btn--sm">View Details</a>
               <a href="https://www.facebook.com/profile.php?id=61573737929854" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn--sm">Inquire</a>
@@ -166,13 +166,13 @@ document.addEventListener("DOMContentLoaded", () => {
             <a href="product.html?product=${encodeURIComponent(p.slug)}" aria-label="View ${p.name}">
               <img src="${p.image}" alt="${p.name} by Namomót-an" loading="lazy">
             </a>
+            <span class="product-card-price">${p.priceDisplay || "₱350"}</span>
           </div>
           <div class="product-card-body">
             <span class="product-card-cat">${p.category.replace("-", " ")}</span>
             <h3 class="product-card-title">
               <a href="product.html?product=${encodeURIComponent(p.slug)}">${p.name}</a>
             </h3>
-            <span class="product-card-price">${p.priceDisplay || "Inquire for price"}</span>
           </div>
         </article>
       `).join("");
