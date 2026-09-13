@@ -651,9 +651,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const dateInput = document.getElementById("order-target-date");
   const cardMsgInput = document.getElementById("order-card-message");
   const senderInput = document.getElementById("order-sender-name");
-  const livePreviewCard = document.getElementById("card-preview-live-text");
-  const livePreviewDate = document.getElementById("card-preview-date");
-  const fontToggles = document.querySelectorAll(".card-font-btn");
   const tmplChips = document.querySelectorAll(".card-tmpl-chip");
 
   let activeItemLabel = "Handcrafted Flower Arrangement";
@@ -665,13 +662,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const dateVal = dateInput && dateInput.value ? dateInput.value : "Flexible / To be confirmed";
     const cardMsg = cardMsgInput && cardMsgInput.value.trim() ? cardMsgInput.value.trim() : "(No dedicated handwritten card requested)";
     const sender = senderInput && senderInput.value.trim() ? senderInput.value.trim() : "";
-
-    if (livePreviewCard) {
-      livePreviewCard.textContent = cardMsgInput && cardMsgInput.value.trim() ? `"${cardMsgInput.value.trim()}"` : `"Namomót-an ta ka. Each handcrafted stem is folded with love for you."`;
-    }
-    if (livePreviewDate) {
-      livePreviewDate.textContent = dateInput && dateInput.value ? dateInput.value : "Selected Date";
-    }
 
     let draft = `Hi Namomót-an! I would like to place an order from your online catalog:\n\n`;
     draft += `🌸 Item / Creation: ${activeItemLabel}\n`;
@@ -691,17 +681,6 @@ document.addEventListener("DOMContentLoaded", () => {
   [recipientInput, barangaySelect, dateInput, cardMsgInput, senderInput].forEach(elem => {
     if (elem) elem.addEventListener("input", refreshOrderDraft);
     if (elem) elem.addEventListener("change", refreshOrderDraft);
-  });
-
-  fontToggles.forEach(btn => {
-    btn.addEventListener("click", () => {
-      fontToggles.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      const fontCls = btn.getAttribute("data-font");
-      if (livePreviewCard) {
-        livePreviewCard.className = `card-preview-text ${fontCls}`;
-      }
-    });
   });
 
   tmplChips.forEach(chip => {

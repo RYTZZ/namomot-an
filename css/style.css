@@ -522,19 +522,6 @@ a.contact-val:hover{color:var(--color-primary-pink)}
 .order-builder-input,.order-builder-select{padding:0.65rem 0.85rem;border:1.5px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-warm-cream);font-size:0.84375rem;color:var(--color-charcoal);outline:none;transition:border-color var(--transition-fast)}
 .order-builder-input:focus,.order-builder-select:focus{border-color:var(--color-primary-pink);background:white}
 
-.card-styler-wrap{display:flex;flex-direction:column;gap:0.75rem}
-.card-preview-canvas{background:#FFFAF4;border:2px solid #EAE0D3;border-radius:var(--radius-lg);padding:1.5rem 1.25rem;box-shadow:inset 0 0 15px rgba(217,159,179,0.06), 0 6px 18px rgba(44,44,44,0.04);position:relative;min-height:160px;display:flex;flex-direction:column;justify-content:space-between}
-.card-preview-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(239,228,214,0.8);padding-bottom:0.5rem;margin-bottom:0.75rem}
-.card-preview-header span{font-size:0.6875rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-dusty-pink)}
-.card-seal{width:22px;height:22px;border-radius:var(--radius-full);background:var(--color-primary-pink);color:white;display:flex;align-items:center;justify-content:center;font-size:0.625rem;font-weight:700}
-.card-preview-text{font-size:0.9375rem;color:var(--color-charcoal);line-height:1.65;word-break:break-word;flex:1}
-.card-preview-text.font-serif{font-family:var(--font-heading);font-size:1.125rem;font-style:italic}
-.card-preview-text.font-script{font-family:cursive,var(--font-heading);font-size:1.1875rem}
-.card-preview-text.font-modern{font-family:var(--font-body);font-size:0.875rem}
-.card-preview-footer{border-top:1px solid rgba(239,228,214,0.8);padding-top:0.5rem;margin-top:0.75rem;display:flex;justify-content:space-between;font-size:0.6875rem;color:var(--color-muted)}
-.card-font-toggles{display:flex;gap:0.4rem}
-.card-font-btn{padding:0.35rem 0.65rem;border-radius:var(--radius-full);border:1px solid var(--color-border);background:white;font-size:0.6875rem;font-weight:600;color:var(--color-muted);cursor:pointer;transition:all var(--transition-fast)}
-.card-font-btn.active{border-color:var(--color-primary-pink);background:var(--color-primary-pink);color:white}
 .card-templates{display:flex;flex-wrap:wrap;gap:0.35rem;margin-top:0.4rem}
 .card-tmpl-chip{padding:0.25rem 0.55rem;border-radius:var(--radius-full);background:var(--color-warm-cream);border:1px solid var(--color-border);font-size:0.6875rem;color:var(--color-muted);cursor:pointer;transition:all var(--transition-fast)}
 .card-tmpl-chip:hover{border-color:var(--color-primary-pink);color:var(--color-primary-pink)}
