@@ -935,100 +935,104 @@
   <div class="order-modal-backdrop" id="order-modal-backdrop" aria-hidden="true">
     <div class="order-modal-dialog order-modal-dialog--wide" role="dialog" aria-modal="true" aria-labelledby="order-modal-title">
       <button type="button" class="order-modal-close" id="order-modal-close" aria-label="Close dialog">&times;</button>
-      <span class="section-eyebrow">SMART ORDER BUILDER</span>
-      <h3 class="order-modal-title" id="order-modal-title">Direct-to-Messenger Order</h3>
-      <p class="order-modal-desc">Personalize delivery details &amp; live dedication card to generate your instant order draft.</p>
-
-      <div class="order-builder-layout">
-        <form class="order-builder-form" id="order-builder-form" novalidate onsubmit="return false;">
-          <div class="order-builder-field">
-            <div class="order-field-header">
-              <label for="order-recipient-name" class="order-builder-label">Recipient Full Name <span class="req-tag">Required</span></label>
-            </div>
-            <input type="text" id="order-recipient-name" class="order-builder-input" placeholder="e.g. Maria Santos" required autocomplete="name">
-            <span class="field-error-msg" id="recipient-error-msg">Please enter recipient's full name</span>
-          </div>
-
-          <div class="order-builder-field">
-            <div class="order-field-header">
-              <span class="order-builder-label">Delivery Location / Barangay</span>
-            </div>
-            <div class="custom-dropdown-wrap custom-dropdown-wrap--field">
-              <input type="hidden" id="order-barangay" value="Talisay, Sorsogon City (Workshop Pick-up / Local)">
-              <button type="button" class="custom-dropdown-btn" aria-haspopup="listbox" aria-expanded="false">
-                <span class="custom-dropdown-val">Talisay, Sorsogon City (Workshop Pick-up / Local)</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-              </button>
-              <ul class="custom-dropdown-menu" role="listbox">
-                <li class="custom-dropdown-item active" role="option" data-value="Talisay, Sorsogon City (Workshop Pick-up / Local)">Talisay, Sorsogon City (Workshop Pick-up / Local)</li>
-                <li class="custom-dropdown-item" role="option" data-value="Sorsogon City Proper / Centro">Sorsogon City Proper / Centro</li>
-                <li class="custom-dropdown-item" role="option" data-value="Bibincahan, Sorsogon City">Bibincahan</li>
-                <li class="custom-dropdown-item" role="option" data-value="Balogo, Sorsogon City">Balogo</li>
-                <li class="custom-dropdown-item" role="option" data-value="Pangpang, Sorsogon City">Pangpang</li>
-                <li class="custom-dropdown-item" role="option" data-value="Bacon District, Sorsogon">Bacon District</li>
-                <li class="custom-dropdown-item" role="option" data-value="Casiguran / Gubat Area">Casiguran / Gubat (Special Route)</li>
-                <li class="custom-dropdown-item" role="option" data-value="Other Sorsogon Area">Other Sorsogon Area</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="order-builder-field">
-            <div class="order-field-header">
-              <label for="order-target-date" class="order-builder-label">Target Delivery Date</label>
-              <span class="lead-time-badge" id="order-lead-badge">Standard Prep: 2 Days</span>
-            </div>
-            <input type="date" id="order-target-date" class="order-builder-input">
-            <span class="field-info-hint" id="order-date-hint">Standard handcrafted lead time is 2 days. Earlier dates are flagged as rush.</span>
-          </div>
-
-          <div class="order-builder-field">
-            <div class="order-field-header">
-              <label for="order-card-message" class="order-builder-label">Handwritten Card Note</label>
-              <span class="char-count" id="card-char-count">0 / 250</span>
-            </div>
-            <textarea id="order-card-message" class="order-builder-input order-builder-textarea" rows="3" maxlength="250" placeholder="Write the heartfelt message you wish to dedicate..."></textarea>
-            <div class="card-templates">
-              <button type="button" class="card-tmpl-chip" data-text="Namom&oacute;t-an ta ka. Happy Anniversary!">Anniversary</button>
-              <button type="button" class="card-tmpl-chip" data-text="Wishing you the happiest birthday filled with joy and blooms!">Birthday</button>
-              <button type="button" class="card-tmpl-chip" data-text="So proud of you on this graduation milestone!">Graduation</button>
-              <button type="button" class="card-tmpl-chip" data-text="Just because you deserve flowers today and everyday.">Just Because</button>
-            </div>
-          </div>
-
-          <div class="order-builder-grid-2">
-            <div class="order-builder-field">
-              <div class="order-field-header">
-                <label for="order-sender-name" class="order-builder-label">Sender Name <span class="opt-tag">Optional</span></label>
-              </div>
-              <input type="text" id="order-sender-name" class="order-builder-input" placeholder="Your full name" autocomplete="name">
-            </div>
-            <div class="order-builder-field">
-              <div class="order-field-header">
-                <label for="order-sender-phone" class="order-builder-label">Contact / Phone <span class="opt-tag">Optional</span></label>
-              </div>
-              <input type="tel" id="order-sender-phone" class="order-builder-input" placeholder="09xxxxxxxxx" autocomplete="tel">
-            </div>
-          </div>
-        </form>
-
-        <div class="order-summary-card">
-          <div class="order-summary-row">
-            <span class="order-summary-label">Creation</span>
-            <strong class="order-summary-value" id="order-modal-item">Handcrafted Bouquet</strong>
-          </div>
-          <div class="order-summary-row order-summary-row--inline">
-            <span class="order-summary-label">Total Price</span>
-            <strong id="order-modal-price" class="order-price-highlight">₱350</strong>
-          </div>
-        </div>
+      <div class="order-modal-header">
+        <span class="section-eyebrow">SMART ORDER BUILDER</span>
+        <h3 class="order-modal-title" id="order-modal-title">Direct-to-Messenger Order</h3>
+        <p class="order-modal-desc">Personalize delivery details &amp; live dedication card to generate your instant order draft.</p>
       </div>
 
-      <div class="order-message-preview">
-        <div class="preview-header">
-          <span class="preview-label">Live Messenger Order Draft</span>
-          <span class="preview-status-pill">Auto-synced</span>
+      <div class="order-modal-body">
+        <div class="order-builder-layout">
+          <form class="order-builder-form" id="order-builder-form" novalidate onsubmit="return false;">
+            <div class="order-builder-field">
+              <div class="order-field-header">
+                <label for="order-recipient-name" class="order-builder-label">Recipient Full Name <span class="req-tag">Required</span></label>
+              </div>
+              <input type="text" id="order-recipient-name" class="order-builder-input" placeholder="e.g. Maria Santos" required autocomplete="name">
+              <span class="field-error-msg" id="recipient-error-msg">Please enter recipient's full name</span>
+            </div>
+
+            <div class="order-builder-field">
+              <div class="order-field-header">
+                <span class="order-builder-label">Delivery Location / Barangay</span>
+              </div>
+              <div class="custom-dropdown-wrap custom-dropdown-wrap--field">
+                <input type="hidden" id="order-barangay" value="Talisay, Sorsogon City (Workshop Pick-up / Local)">
+                <button type="button" class="custom-dropdown-btn" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="custom-dropdown-val">Talisay, Sorsogon City (Workshop Pick-up / Local)</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <ul class="custom-dropdown-menu" role="listbox">
+                  <li class="custom-dropdown-item active" role="option" data-value="Talisay, Sorsogon City (Workshop Pick-up / Local)">Talisay, Sorsogon City (Workshop Pick-up / Local)</li>
+                  <li class="custom-dropdown-item" role="option" data-value="Sorsogon City Proper / Centro">Sorsogon City Proper / Centro</li>
+                  <li class="custom-dropdown-item" role="option" data-value="Bibincahan, Sorsogon City">Bibincahan</li>
+                  <li class="custom-dropdown-item" role="option" data-value="Balogo, Sorsogon City">Balogo</li>
+                  <li class="custom-dropdown-item" role="option" data-value="Pangpang, Sorsogon City">Pangpang</li>
+                  <li class="custom-dropdown-item" role="option" data-value="Bacon District, Sorsogon">Bacon District</li>
+                  <li class="custom-dropdown-item" role="option" data-value="Casiguran / Gubat Area">Casiguran / Gubat (Special Route)</li>
+                  <li class="custom-dropdown-item" role="option" data-value="Other Sorsogon Area">Other Sorsogon Area</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="order-builder-field">
+              <div class="order-field-header">
+                <label for="order-target-date" class="order-builder-label">Target Delivery Date</label>
+                <span class="lead-time-badge" id="order-lead-badge">Standard Prep: 2 Days</span>
+              </div>
+              <input type="date" id="order-target-date" class="order-builder-input">
+              <span class="field-info-hint" id="order-date-hint">Standard handcrafted lead time is 2 days. Earlier dates are flagged as rush.</span>
+            </div>
+
+            <div class="order-builder-field">
+              <div class="order-field-header">
+                <label for="order-card-message" class="order-builder-label">Handwritten Card Note</label>
+                <span class="char-count" id="card-char-count">0 / 250</span>
+              </div>
+              <textarea id="order-card-message" class="order-builder-input order-builder-textarea" rows="2" maxlength="250" placeholder="Write the heartfelt message you wish to dedicate..."></textarea>
+              <div class="card-templates">
+                <button type="button" class="card-tmpl-chip" data-text="Namom&oacute;t-an ta ka. Happy Anniversary!">Anniversary</button>
+                <button type="button" class="card-tmpl-chip" data-text="Wishing you the happiest birthday filled with joy and blooms!">Birthday</button>
+                <button type="button" class="card-tmpl-chip" data-text="So proud of you on this graduation milestone!">Graduation</button>
+                <button type="button" class="card-tmpl-chip" data-text="Just because you deserve flowers today and everyday.">Just Because</button>
+              </div>
+            </div>
+
+            <div class="order-builder-grid-2">
+              <div class="order-builder-field">
+                <div class="order-field-header">
+                  <label for="order-sender-name" class="order-builder-label"><span>Sender Name</span> <span class="opt-tag">Optional</span></label>
+                </div>
+                <input type="text" id="order-sender-name" class="order-builder-input" placeholder="Your full name" autocomplete="name">
+              </div>
+              <div class="order-builder-field">
+                <div class="order-field-header">
+                  <label for="order-sender-phone" class="order-builder-label"><span>Contact / Phone</span> <span class="opt-tag">Optional</span></label>
+                </div>
+                <input type="tel" id="order-sender-phone" class="order-builder-input" placeholder="09xxxxxxxxx" autocomplete="tel">
+              </div>
+            </div>
+          </form>
+
+          <div class="order-summary-card">
+            <div class="order-summary-row">
+              <span class="order-summary-label">Creation</span>
+              <strong class="order-summary-value" id="order-modal-item">Handcrafted Bouquet</strong>
+            </div>
+            <div class="order-summary-row order-summary-row--inline">
+              <span class="order-summary-label">Total Price</span>
+              <strong id="order-modal-price" class="order-price-highlight">₱350</strong>
+            </div>
+          </div>
         </div>
-        <textarea id="order-message-text" rows="5" readonly aria-label="Generated Order Message Draft"></textarea>
+
+        <div class="order-message-preview">
+          <div class="preview-header">
+            <span class="preview-label">Live Messenger Order Draft</span>
+            <span class="preview-status-pill">Auto-synced</span>
+          </div>
+          <textarea id="order-message-text" rows="4" readonly aria-label="Generated Order Message Draft"></textarea>
+        </div>
       </div>
 
       <div class="order-modal-actions">
