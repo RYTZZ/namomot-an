@@ -369,3 +369,19 @@
     padding: 0.5rem 0;
   }
 }
+
+@media (max-width: 768px) {
+  .order-builder-layout {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .cart-drawer, .wishlist-drawer {
+    width: 100vw;
+  }
+  .mobile-sticky-actionbar {
+    display: flex;
+  }
+  .floating-messenger-fab {
+    bottom: 5.5rem;
+  }
+}
