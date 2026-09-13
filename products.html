@@ -81,26 +81,36 @@
           <p class="matcher-desc">Select who you're gifting to and the occasion for personalized floral matches.</p>
         </div>
         <div class="matcher-controls">
-          <div class="matcher-select-wrap">
-            <label for="matcher-recipient" class="matcher-label">Gifting For:</label>
-            <select id="matcher-recipient" class="matcher-select">
-              <option value="any">Anyone / Any Recipient</option>
-              <option value="partner">Partner / Loved One</option>
-              <option value="mother">Mother / Parent</option>
-              <option value="friend">Friend / Colleague</option>
-              <option value="self">Self / Home Decor</option>
-            </select>
+          <div class="custom-dropdown-wrap" data-select-id="matcher-recipient">
+            <span class="matcher-label">Gifting For:</span>
+            <input type="hidden" id="matcher-recipient" value="any">
+            <button type="button" class="custom-dropdown-btn" aria-haspopup="listbox" aria-expanded="false">
+              <span class="custom-dropdown-val">Anyone / Any Recipient</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <ul class="custom-dropdown-menu" role="listbox">
+              <li class="custom-dropdown-item active" role="option" data-value="any">Anyone / Any Recipient</li>
+              <li class="custom-dropdown-item" role="option" data-value="partner">Partner / Loved One</li>
+              <li class="custom-dropdown-item" role="option" data-value="mother">Mother / Parent</li>
+              <li class="custom-dropdown-item" role="option" data-value="friend">Friend / Colleague</li>
+              <li class="custom-dropdown-item" role="option" data-value="self">Self / Home Decor</li>
+            </ul>
           </div>
-          <div class="matcher-select-wrap">
-            <label for="matcher-occasion" class="matcher-label">Occasion:</label>
-            <select id="matcher-occasion" class="matcher-select">
-              <option value="any">Any Occasion</option>
-              <option value="birthday">Birthday Celebration</option>
-              <option value="anniversary">Romantic Anniversary</option>
-              <option value="graduation">Graduation &amp; Milestone</option>
-              <option value="wedding">Wedding / Entourage</option>
-              <option value="just-because">Just Because / Thinking of You</option>
-            </select>
+          <div class="custom-dropdown-wrap" data-select-id="matcher-occasion">
+            <span class="matcher-label">Occasion:</span>
+            <input type="hidden" id="matcher-occasion" value="any">
+            <button type="button" class="custom-dropdown-btn" aria-haspopup="listbox" aria-expanded="false">
+              <span class="custom-dropdown-val">Any Occasion</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <ul class="custom-dropdown-menu" role="listbox">
+              <li class="custom-dropdown-item active" role="option" data-value="any">Any Occasion</li>
+              <li class="custom-dropdown-item" role="option" data-value="birthday">Birthday Celebration</li>
+              <li class="custom-dropdown-item" role="option" data-value="anniversary">Romantic Anniversary</li>
+              <li class="custom-dropdown-item" role="option" data-value="graduation">Graduation &amp; Milestone</li>
+              <li class="custom-dropdown-item" role="option" data-value="wedding">Wedding / Entourage</li>
+              <li class="custom-dropdown-item" role="option" data-value="just-because">Just Because / Thinking of You</li>
+            </ul>
           </div>
           <button type="button" class="btn btn-primary" id="matcher-filter-btn">
             SHOW MATCHES
