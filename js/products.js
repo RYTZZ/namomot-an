@@ -151,49 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    const customDropdowns = document.querySelectorAll(".custom-dropdown-wrap");
-    customDropdowns.forEach(dropdown => {
-      const btn = dropdown.querySelector(".custom-dropdown-btn");
-      const menu = dropdown.querySelector(".custom-dropdown-menu");
-      const valDisplay = dropdown.querySelector(".custom-dropdown-val");
-      const hiddenInput = dropdown.querySelector("input[type='hidden']");
-      const items = dropdown.querySelectorAll(".custom-dropdown-item");
-
-      if (btn && menu) {
-        btn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          const isOpen = dropdown.classList.contains("open");
-          customDropdowns.forEach(d => {
-            if (d !== dropdown) d.classList.remove("open");
-          });
-          dropdown.classList.toggle("open", !isOpen);
-          btn.setAttribute("aria-expanded", (!isOpen).toString());
-        });
-
-        items.forEach(item => {
-          item.addEventListener("click", (e) => {
-            e.stopPropagation();
-            items.forEach(it => it.classList.remove("active"));
-            item.classList.add("active");
-            const text = item.textContent.trim();
-            const val = item.getAttribute("data-value");
-            if (valDisplay) valDisplay.textContent = text;
-            if (hiddenInput) hiddenInput.value = val;
-            dropdown.classList.remove("open");
-            btn.setAttribute("aria-expanded", "false");
-          });
-        });
-      }
-    });
-
-    document.addEventListener("click", () => {
-      customDropdowns.forEach(d => {
-        d.classList.remove("open");
-        const b = d.querySelector(".custom-dropdown-btn");
-        if (b) b.setAttribute("aria-expanded", "false");
-      });
-    });
-
     const matcherRecipient = document.getElementById("matcher-recipient");
     const matcherOccasion = document.getElementById("matcher-occasion");
     const matcherFilterBtn = document.getElementById("matcher-filter-btn");
@@ -218,7 +175,8 @@ document.addEventListener("DOMContentLoaded", () => {
       matcherResetBtn.addEventListener("click", () => {
         if (matcherRecipient) matcherRecipient.value = "any";
         if (matcherOccasion) matcherOccasion.value = "any";
-        customDropdowns.forEach(d => {
+        const matcherDropdowns = document.querySelectorAll(".product-matcher-wrap .custom-dropdown-wrap");
+        matcherDropdowns.forEach(d => {
           const first = d.querySelector(".custom-dropdown-item[data-value='any']");
           const items = d.querySelectorAll(".custom-dropdown-item");
           const valDisplay = d.querySelector(".custom-dropdown-val");
@@ -764,6 +722,52 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
+  const customDropdowns = document.querySelectorAll(".custom-dropdown-wrap");
+  customDropdowns.forEach(dropdown => {
+    const btn = dropdown.querySelector(".custom-dropdown-btn");
+    const menu = dropdown.querySelector(".custom-dropdown-menu");
+    const valDisplay = dropdown.querySelector(".custom-dropdown-val");
+    const hiddenInput = dropdown.querySelector("input[type='hidden']");
+    const items = dropdown.querySelectorAll(".custom-dropdown-item");
+
+    if (btn && menu) {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.contains("open");
+        customDropdowns.forEach(d => {
+          if (d !== dropdown) d.classList.remove("open");
+        });
+        dropdown.classList.toggle("open", !isOpen);
+        btn.setAttribute("aria-expanded", (!isOpen).toString());
+      });
+
+      items.forEach(item => {
+        item.addEventListener("click", (e) => {
+          e.stopPropagation();
+          items.forEach(it => it.classList.remove("active"));
+          item.classList.add("active");
+          const text = item.textContent.trim();
+          const val = item.getAttribute("data-value");
+          if (valDisplay) valDisplay.textContent = text;
+          if (hiddenInput) {
+            hiddenInput.value = val;
+            hiddenInput.dispatchEvent(new Event("change"));
+          }
+          dropdown.classList.remove("open");
+          btn.setAttribute("aria-expanded", "false");
+        });
+      });
+    }
+  });
+
+  document.addEventListener("click", () => {
+    customDropdowns.forEach(d => {
+      d.classList.remove("open");
+      const b = d.querySelector(".custom-dropdown-btn");
+      if (b) b.setAttribute("aria-expanded", "false");
+    });
+  });
 
   const indexInquireBtns = document.querySelectorAll(".favorites-section .product-card-actions .btn-primary");
   indexInquireBtns.forEach(btn => {

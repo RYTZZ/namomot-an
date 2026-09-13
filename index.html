@@ -946,17 +946,24 @@
             <input type="text" id="order-recipient-name" class="order-builder-input" placeholder="e.g. Maria Santos">
           </div>
           <div class="order-builder-field">
-            <label for="order-barangay" class="order-builder-label">Delivery Location / Barangay</label>
-            <select id="order-barangay" class="order-builder-select">
-              <option value="Talisay, Sorsogon City">Talisay, Sorsogon City (Workshop Pick-up / Local)</option>
-              <option value="Sorsogon City Proper">Sorsogon City Proper / Centro</option>
-              <option value="Bibincahan, Sorsogon City">Bibincahan</option>
-              <option value="Balogo, Sorsogon City">Balogo</option>
-              <option value="Pangpang, Sorsogon City">Pangpang</option>
-              <option value="Bacon District, Sorsogon">Bacon District</option>
-              <option value="Casiguran / Gubat Area">Casiguran / Gubat (Special Route)</option>
-              <option value="Other Sorsogon Area">Other Sorsogon Area</option>
-            </select>
+            <span class="order-builder-label">Delivery Location / Barangay</span>
+            <div class="custom-dropdown-wrap custom-dropdown-wrap--field">
+              <input type="hidden" id="order-barangay" value="Talisay, Sorsogon City (Workshop Pick-up / Local)">
+              <button type="button" class="custom-dropdown-btn" aria-haspopup="listbox" aria-expanded="false">
+                <span class="custom-dropdown-val">Talisay, Sorsogon City (Workshop Pick-up / Local)</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <ul class="custom-dropdown-menu" role="listbox">
+                <li class="custom-dropdown-item active" role="option" data-value="Talisay, Sorsogon City (Workshop Pick-up / Local)">Talisay, Sorsogon City (Workshop Pick-up / Local)</li>
+                <li class="custom-dropdown-item" role="option" data-value="Sorsogon City Proper / Centro">Sorsogon City Proper / Centro</li>
+                <li class="custom-dropdown-item" role="option" data-value="Bibincahan, Sorsogon City">Bibincahan</li>
+                <li class="custom-dropdown-item" role="option" data-value="Balogo, Sorsogon City">Balogo</li>
+                <li class="custom-dropdown-item" role="option" data-value="Pangpang, Sorsogon City">Pangpang</li>
+                <li class="custom-dropdown-item" role="option" data-value="Bacon District, Sorsogon">Bacon District</li>
+                <li class="custom-dropdown-item" role="option" data-value="Casiguran / Gubat Area">Casiguran / Gubat (Special Route)</li>
+                <li class="custom-dropdown-item" role="option" data-value="Other Sorsogon Area">Other Sorsogon Area</li>
+              </ul>
+            </div>
           </div>
           <div class="order-builder-field">
             <label for="order-target-date" class="order-builder-label">Target Delivery Date</label>
