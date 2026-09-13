@@ -5,18 +5,55 @@ document.addEventListener("DOMContentLoaded", () => {
   const filterBtns = document.querySelectorAll(".filter-btn");
 
   if (productGrid) {
-    const renderProducts = (category = "all") => {
-      const filtered = category === "all"
-        ? PRODUCTS
-        : PRODUCTS.filter(p => p.categories && p.categories.includes(category));
+    const searchInput = document.getElementById("catalog-search");
+    const searchClear = document.getElementById("catalog-search-clear");
+    const countEl = document.getElementById("catalog-count");
+
+    let currentCategory = "all";
+    let searchQuery = "";
+
+    const renderProducts = () => {
+      const q = searchQuery.trim().toLowerCase();
+      const filtered = PRODUCTS.filter(p => {
+        const matchesCat = currentCategory === "all" || (p.categories && p.categories.includes(currentCategory));
+        if (!matchesCat) return false;
+        if (!q) return true;
+        const nameMatch = p.name && p.name.toLowerCase().includes(q);
+        const descMatch = (p.shortDescription && p.shortDescription.toLowerCase().includes(q)) || (p.description && p.description.toLowerCase().includes(q));
+        const catMatch = p.category && p.category.toLowerCase().includes(q);
+        const occasionMatch = p.occasion && p.occasion.toLowerCase().includes(q);
+        return nameMatch || descMatch || catMatch || occasionMatch;
+      });
+
+      if (countEl) {
+        countEl.textContent = filtered.length;
+      }
 
       if (filtered.length === 0) {
         productGrid.innerHTML = `
           <div class="no-products-msg" style="grid-column:1/-1;text-align:center;padding:3rem 1.5rem;">
-            <p style="font-size:1.125rem;color:var(--color-muted);margin-bottom:1.5rem;">Flowers will be added here soon.</p>
-            <button class="btn btn-secondary" onclick="document.querySelector('[data-category=all]').click()">View All Flowers</button>
+            <p style="font-size:1.125rem;color:var(--color-muted);margin-bottom:1.5rem;">No handcrafted flowers match "${searchQuery || currentCategory}".</p>
+            <button class="btn btn-secondary" id="reset-catalog-filters">Clear Filters</button>
           </div>
         `;
+        const resetBtn = document.getElementById("reset-catalog-filters");
+        if (resetBtn) {
+          resetBtn.addEventListener("click", () => {
+            currentCategory = "all";
+            searchQuery = "";
+            if (searchInput) searchInput.value = "";
+            if (searchClear) searchClear.style.display = "none";
+            filterBtns.forEach(b => {
+              if (b.getAttribute("data-category") === "all") {
+                b.classList.add("active");
+              } else {
+                b.classList.remove("active");
+              }
+            });
+            window.history.replaceState(null, "", window.location.pathname);
+            renderProducts();
+          });
+        }
         return;
       }
 
@@ -49,24 +86,45 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const urlParams = new URLSearchParams(window.location.search);
-    const initialCategory = urlParams.get("category") || "all";
-
-    renderProducts(initialCategory);
+    currentCategory = urlParams.get("category") || "all";
 
     filterBtns.forEach(btn => {
       const cat = btn.getAttribute("data-category");
-      if (cat === initialCategory) {
+      if (cat === currentCategory) {
         filterBtns.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
       }
       btn.addEventListener("click", () => {
         filterBtns.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
-        renderProducts(cat);
+        currentCategory = cat;
+        renderProducts();
         const newUrl = cat === "all" ? window.location.pathname : `${window.location.pathname}?category=${cat}`;
         window.history.replaceState(null, "", newUrl);
       });
     });
+
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        searchQuery = e.target.value;
+        if (searchClear) {
+          searchClear.style.display = searchQuery ? "inline-flex" : "none";
+        }
+        renderProducts();
+      });
+    }
+
+    if (searchClear) {
+      searchClear.addEventListener("click", () => {
+        searchQuery = "";
+        if (searchInput) searchInput.value = "";
+        searchClear.style.display = "none";
+        renderProducts();
+        if (searchInput) searchInput.focus();
+      });
+    }
+
+    renderProducts();
   }
 
   const detailWrap = document.getElementById("product-detail-wrap");
