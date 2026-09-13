@@ -940,18 +940,24 @@
       <p class="order-modal-desc">Personalize delivery details &amp; live dedication card to generate your instant order draft.</p>
 
       <div class="order-builder-layout">
-        <div class="order-builder-form">
+        <form class="order-builder-form" id="order-builder-form" novalidate onsubmit="return false;">
           <div class="order-builder-field">
-            <label for="order-recipient-name" class="order-builder-label">Recipient Full Name</label>
-            <input type="text" id="order-recipient-name" class="order-builder-input" placeholder="e.g. Maria Santos">
+            <div class="order-field-header">
+              <label for="order-recipient-name" class="order-builder-label">Recipient Full Name <span class="req-tag">Required</span></label>
+            </div>
+            <input type="text" id="order-recipient-name" class="order-builder-input" placeholder="e.g. Maria Santos" required autocomplete="name">
+            <span class="field-error-msg" id="recipient-error-msg">Please enter recipient's full name</span>
           </div>
+
           <div class="order-builder-field">
-            <span class="order-builder-label">Delivery Location / Barangay</span>
+            <div class="order-field-header">
+              <span class="order-builder-label">Delivery Location / Barangay</span>
+            </div>
             <div class="custom-dropdown-wrap custom-dropdown-wrap--field">
               <input type="hidden" id="order-barangay" value="Talisay, Sorsogon City (Workshop Pick-up / Local)">
               <button type="button" class="custom-dropdown-btn" aria-haspopup="listbox" aria-expanded="false">
                 <span class="custom-dropdown-val">Talisay, Sorsogon City (Workshop Pick-up / Local)</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
               </button>
               <ul class="custom-dropdown-menu" role="listbox">
                 <li class="custom-dropdown-item active" role="option" data-value="Talisay, Sorsogon City (Workshop Pick-up / Local)">Talisay, Sorsogon City (Workshop Pick-up / Local)</li>
@@ -965,25 +971,45 @@
               </ul>
             </div>
           </div>
+
           <div class="order-builder-field">
-            <label for="order-target-date" class="order-builder-label">Target Delivery Date</label>
+            <div class="order-field-header">
+              <label for="order-target-date" class="order-builder-label">Target Delivery Date</label>
+              <span class="lead-time-badge" id="order-lead-badge">Standard Prep: 2 Days</span>
+            </div>
             <input type="date" id="order-target-date" class="order-builder-input">
+            <span class="field-info-hint" id="order-date-hint">Standard handcrafted lead time is 2 days. Earlier dates are flagged as rush.</span>
           </div>
+
           <div class="order-builder-field">
-            <label for="order-card-message" class="order-builder-label">Handwritten Card Note</label>
-            <textarea id="order-card-message" class="order-builder-input" rows="2" placeholder="Write what you wish to express..."></textarea>
+            <div class="order-field-header">
+              <label for="order-card-message" class="order-builder-label">Handwritten Card Note</label>
+              <span class="char-count" id="card-char-count">0 / 250</span>
+            </div>
+            <textarea id="order-card-message" class="order-builder-input order-builder-textarea" rows="3" maxlength="250" placeholder="Write the heartfelt message you wish to dedicate..."></textarea>
             <div class="card-templates">
-              <button type="button" class="card-tmpl-chip" data-text="Namomót-an ta ka. Happy Anniversary!">Anniversary</button>
+              <button type="button" class="card-tmpl-chip" data-text="Namom&oacute;t-an ta ka. Happy Anniversary!">Anniversary</button>
               <button type="button" class="card-tmpl-chip" data-text="Wishing you the happiest birthday filled with joy and blooms!">Birthday</button>
               <button type="button" class="card-tmpl-chip" data-text="So proud of you on this graduation milestone!">Graduation</button>
               <button type="button" class="card-tmpl-chip" data-text="Just because you deserve flowers today and everyday.">Just Because</button>
             </div>
           </div>
-          <div class="order-builder-field">
-            <label for="order-sender-name" class="order-builder-label">Sender Name &amp; Contact (Optional)</label>
-            <input type="text" id="order-sender-name" class="order-builder-input" placeholder="Your name / 09xxxxxxxxx">
+
+          <div class="order-builder-grid-2">
+            <div class="order-builder-field">
+              <div class="order-field-header">
+                <label for="order-sender-name" class="order-builder-label">Sender Name <span class="opt-tag">Optional</span></label>
+              </div>
+              <input type="text" id="order-sender-name" class="order-builder-input" placeholder="Your full name" autocomplete="name">
+            </div>
+            <div class="order-builder-field">
+              <div class="order-field-header">
+                <label for="order-sender-phone" class="order-builder-label">Contact / Phone <span class="opt-tag">Optional</span></label>
+              </div>
+              <input type="tel" id="order-sender-phone" class="order-builder-input" placeholder="09xxxxxxxxx" autocomplete="tel">
+            </div>
           </div>
-        </div>
+        </form>
 
         <div class="order-summary-card">
           <div class="order-summary-row">
@@ -992,23 +1018,27 @@
           </div>
           <div class="order-summary-row order-summary-row--inline">
             <span class="order-summary-label">Total Price</span>
-            <strong id="order-modal-price" style="font-size:1.375rem;font-weight:700;color:var(--color-primary-pink);">₱350</strong>
+            <strong id="order-modal-price" class="order-price-highlight">₱350</strong>
           </div>
         </div>
       </div>
 
-      <div class="order-message-preview" style="margin-bottom:1rem;">
-        <textarea id="order-message-text" rows="3" readonly aria-label="Generated Order Message"></textarea>
+      <div class="order-message-preview">
+        <div class="preview-header">
+          <span class="preview-label">Live Messenger Order Draft</span>
+          <span class="preview-status-pill">Auto-synced</span>
+        </div>
+        <textarea id="order-message-text" rows="5" readonly aria-label="Generated Order Message Draft"></textarea>
       </div>
 
-      <div class="order-modal-actions" style="flex-direction:row;">
-        <button type="button" class="btn btn-secondary" id="copy-order-msg-btn" style="flex:1;">
+      <div class="order-modal-actions">
+        <button type="button" class="btn btn-secondary order-action-btn" id="copy-order-msg-btn">
           <span>COPY ORDER DRAFT</span>
         </button>
-        <a href="https://www.facebook.com/profile.php?id=61573737929854" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="open-messenger-btn" style="flex:1.4;">
+        <button type="button" class="btn btn-primary order-action-btn" id="open-messenger-btn">
           <svg width="18" height="18" aria-hidden="true"><use href="#icon-facebook"/></svg>
-          CONFIRM ON MESSENGER
-        </a>
+          <span>CONFIRM ON MESSENGER</span>
+        </button>
       </div>
     </div>
   </div>

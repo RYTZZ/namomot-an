@@ -371,9 +371,21 @@
 }
 
 @media (max-width: 768px) {
+  .order-modal-dialog--wide {
+    padding: 1.5rem 1.25rem;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
   .order-builder-layout {
     grid-template-columns: 1fr;
     gap: 1.25rem;
+  }
+  .order-builder-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+  .order-modal-actions {
+    grid-template-columns: 1fr;
   }
   .cart-drawer, .wishlist-drawer {
     width: 100vw;

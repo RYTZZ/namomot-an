@@ -603,23 +603,81 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalPrice = document.getElementById("order-modal-price");
   const modalText = document.getElementById("order-message-text");
   const copyBtn = document.getElementById("copy-order-msg-btn");
+  const messengerBtn = document.getElementById("open-messenger-btn");
 
   const recipientInput = document.getElementById("order-recipient-name");
   const barangaySelect = document.getElementById("order-barangay");
   const dateInput = document.getElementById("order-target-date");
   const cardMsgInput = document.getElementById("order-card-message");
   const senderInput = document.getElementById("order-sender-name");
+  const senderPhoneInput = document.getElementById("order-sender-phone");
+  const charCountEl = document.getElementById("card-char-count");
+  const leadBadge = document.getElementById("order-lead-badge");
+  const dateHint = document.getElementById("order-date-hint");
+  const recipientErrorMsg = document.getElementById("recipient-error-msg");
   const tmplChips = document.querySelectorAll(".card-tmpl-chip");
 
   let activeItemLabel = "Handcrafted Flower Arrangement";
   let activePriceLabel = "₱350";
+
+  const getLocalDateString = (d) => {
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const updateLeadTimeUI = () => {
+    if (!dateInput) return;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const minDateStr = getLocalDateString(today);
+    dateInput.setAttribute("min", minDateStr);
+
+    if (dateInput.value) {
+      const selected = new Date(dateInput.value + "T00:00:00");
+      const diffDays = Math.ceil((selected - today) / (1000 * 60 * 60 * 24));
+
+      if (diffDays < 0) {
+        dateInput.value = minDateStr;
+        if (leadBadge) {
+          leadBadge.textContent = "Past Date Reset";
+          leadBadge.className = "lead-time-badge rush";
+        }
+      } else if (diffDays < 2) {
+        if (leadBadge) {
+          leadBadge.textContent = "Rush Order: Under 2 Days";
+          leadBadge.className = "lead-time-badge rush";
+        }
+        if (dateHint) {
+          dateHint.textContent = "⚡ Same-day / 1-day orders are subject to on-hand bloom availability.";
+        }
+      } else {
+        if (leadBadge) {
+          leadBadge.textContent = "Standard Prep: 2+ Days";
+          leadBadge.className = "lead-time-badge";
+        }
+        if (dateHint) {
+          dateHint.textContent = "Standard handcrafted lead time is 2 days. Workshop will carefully prepare your blooms.";
+        }
+      }
+    }
+  };
 
   const refreshOrderDraft = () => {
     const recipient = recipientInput && recipientInput.value.trim() ? recipientInput.value.trim() : "Special Someone";
     const barangay = barangaySelect ? barangaySelect.value : "Talisay, Sorsogon City";
     const dateVal = dateInput && dateInput.value ? dateInput.value : "Flexible / To be confirmed";
     const cardMsg = cardMsgInput && cardMsgInput.value.trim() ? cardMsgInput.value.trim() : "(No dedicated handwritten card requested)";
-    const sender = senderInput && senderInput.value.trim() ? senderInput.value.trim() : "";
+    const senderName = senderInput && senderInput.value.trim() ? senderInput.value.trim() : "";
+    const senderPhone = senderPhoneInput && senderPhoneInput.value.trim() ? senderPhoneInput.value.trim() : "";
+
+    if (charCountEl && cardMsgInput) {
+      charCountEl.textContent = `${cardMsgInput.value.length} / 250`;
+    }
+
+    updateLeadTimeUI();
 
     let draft = `Hi Namomót-an! I would like to place an order from your online catalog:\n\n`;
     if (activeItemLabel.includes("\n")) {
@@ -632,16 +690,29 @@ document.addEventListener("DOMContentLoaded", () => {
     draft += `📍 Delivery Location: ${barangay}\n`;
     draft += `📅 Target Date: ${dateVal}\n`;
     draft += `💌 Dedication Card Note:\n"${cardMsg}"\n`;
-    if (sender) {
-      draft += `\n✍️ Sender Details: ${sender}\n`;
+
+    if (senderName || senderPhone) {
+      let senderInfo = senderName;
+      if (senderPhone) {
+        senderInfo = senderInfo ? `${senderInfo} (${senderPhone})` : senderPhone;
+      }
+      draft += `\n✍️ Sender Details: ${senderInfo}\n`;
     }
     draft += `\nPlease confirm workshop availability and payment details. Thank you!`;
 
     if (modalText) modalText.value = draft;
   };
 
-  [recipientInput, barangaySelect, dateInput, cardMsgInput, senderInput].forEach(elem => {
-    if (elem) elem.addEventListener("input", refreshOrderDraft);
+  [recipientInput, barangaySelect, dateInput, cardMsgInput, senderInput, senderPhoneInput].forEach(elem => {
+    if (elem) elem.addEventListener("input", () => {
+      if (elem === recipientInput) {
+        const field = recipientInput.closest(".order-builder-field");
+        if (field && recipientInput.value.trim()) {
+          field.classList.remove("has-error");
+        }
+      }
+      refreshOrderDraft();
+    });
     if (elem) elem.addEventListener("change", refreshOrderDraft);
   });
 
@@ -673,10 +744,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (modalPrice) modalPrice.textContent = activePriceLabel;
 
-    if (dateInput && !dateInput.value) {
-      const today = new Date();
-      today.setDate(today.getDate() + 2);
-      dateInput.value = today.toISOString().split("T")[0];
+    const today = new Date();
+    const minDateStr = getLocalDateString(today);
+    if (dateInput) {
+      dateInput.setAttribute("min", minDateStr);
+      if (!dateInput.value) {
+        const defaultDate = new Date();
+        defaultDate.setDate(defaultDate.getDate() + 2);
+        dateInput.value = getLocalDateString(defaultDate);
+      }
+    }
+
+    if (recipientInput) {
+      const field = recipientInput.closest(".order-builder-field");
+      if (field) field.classList.remove("has-error");
     }
 
     refreshOrderDraft();
@@ -716,8 +797,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const validateOrderForm = () => {
+    let isValid = true;
+    if (recipientInput) {
+      const field = recipientInput.closest(".order-builder-field");
+      if (!recipientInput.value.trim()) {
+        if (field) field.classList.add("has-error");
+        recipientInput.focus();
+        isValid = false;
+      } else {
+        if (field) field.classList.remove("has-error");
+      }
+    }
+    return isValid;
+  };
+
   if (copyBtn && modalText) {
     copyBtn.addEventListener("click", () => {
+      if (!validateOrderForm()) return;
       modalText.select();
       navigator.clipboard.writeText(modalText.value).then(() => {
         copyBtn.textContent = "COPIED TO CLIPBOARD!";
@@ -734,6 +831,17 @@ document.addEventListener("DOMContentLoaded", () => {
           copyBtn.textContent = "COPY ORDER DRAFT";
         }, 2500);
       });
+    });
+  }
+
+  if (messengerBtn && modalText) {
+    messengerBtn.addEventListener("click", () => {
+      if (!validateOrderForm()) return;
+      navigator.clipboard.writeText(modalText.value).catch(() => {});
+      if (typeof window.showAtelierToast === "function") {
+        window.showAtelierToast("🌸 Opening Messenger with your copied draft...");
+      }
+      window.open("https://www.facebook.com/profile.php?id=61573737929854", "_blank");
     });
   }
 
