@@ -196,6 +196,14 @@
     margin-bottom: 0.75rem;
     font-size: 0.8125rem;
   }
+  .product-card-price-row {
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+  }
+  .product-card-price {
+    font-size: 1.1875rem;
+    padding: 0.3rem 0.8rem;
+  }
   .product-card-actions {
     flex-direction: column;
     gap: 0.5rem;
